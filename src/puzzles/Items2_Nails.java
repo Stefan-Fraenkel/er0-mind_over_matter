@@ -223,7 +223,6 @@ public class Items2_Nails extends Puzzle_Common {
 			this.setPanel(false);
 			this.setYesnoquestion(true);
 			Pocket.addItemAuto(Nails);
-
 		}
 		else if (this.getCompletion() == true && check == true && this.planked == true && (((item1.getItemName().equals("Plank") && item2.getItemName().equals("Nails")) | (item1.getItemName().equals("Nails") && item2.getItemName().equals("Plank"))) || ((item1.getItemName().equals("Plank") && item2.getItemName().equals("Hammer")) | (item1.getItemName().equals("Hammer") && item2.getItemName().equals("Plank"))) || ((item1.getItemName().equals("Hammer") && item2.getItemName().equals("Nails")) | (item1.getItemName().equals("Nails") && item2.getItemName().equals("Hammer"))))) {
 			this.setCompletion(true);
