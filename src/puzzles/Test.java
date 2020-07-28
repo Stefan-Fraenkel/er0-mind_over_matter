@@ -5,7 +5,7 @@ import framework.*;
 
 public class Test {
 	
-// Escape Room 0: Mind over Matter 
+// Escape Room 0: Mind over Matter
 	
 	public static void main(String[] args) {
 		Room room_01 = new Room(new Light(), new TicTacToe(), new Items1_Blank(), new Items2_Nails(), new Ceiling(), new Floor() );
