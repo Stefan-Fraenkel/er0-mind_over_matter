@@ -42,7 +42,7 @@ public class Outputter {
 	private static String reaction;
 	
 	public static String getOutput() {
-		image = Abilities.getView().getImage();
+		
 		description = Abilities.getView().getDescription();
 		question = Abilities.getView().getQuestion();
 		result = Abilities.getView().getResult();
@@ -71,6 +71,7 @@ public class Outputter {
 		else actions = actionbar;
 		output = "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n";
 		
+		image = Abilities.getView().getImage(); //Image ganz am Schluss, damit andere Checks es beeinflussen können
 
 //		image
 //		enter

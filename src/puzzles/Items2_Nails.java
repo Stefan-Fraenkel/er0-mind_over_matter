@@ -27,6 +27,99 @@ public class Items2_Nails extends Puzzle_Common {
 	private Item[] loot = { Nails };
 
 	private Item[] pois = { Wall, Panel, Slot, Lever };
+	
+	private String paneled =
+			"\n  __________________________" +
+			"\n |                          |" +
+			"\n | o                      o |" +
+			"\n |                          |" +
+			"\n |                          |" +
+			"\n |                          |" +
+			"\n |                          |" +
+			"\n |                          |" +
+			"\n |                          |" +
+			"\n |                          |" +
+			"\n |                          |" +
+			"\n |                          |" +
+			"\n |                          |" +
+			"\n |                          |" +
+			"\n | o                      o |" +
+			"\n |__________________________|";
+					
+	private String leverup =
+			"\n             ___ (@)" +
+			"\n            |.-.|/ " +
+			"\n            || |/" +
+			"\n            || /|" +
+			"\n            ||/||" +
+			"\n            || ||" +
+			"\n            ||_||" +
+			"\n            '---'";
+	private String leverdown = 
+			"\n             ___" +
+			"\n            |.-.| " +
+			"\n            || ||" +
+			"\n            || ||" +
+			"\n            ||\\||" +
+			"\n            || \\|" +
+			"\n            ||_|\\" +
+			"\n            '---'\\" +
+			"\n                 (@)";
+	private String leverplanked = 
+			"\n             ___ (@)" +
+			"\n            |.-.|/ " +
+			"\n            || |/" +
+			"\n            || /|" +
+			"\n            ||/||" +
+			"\n    ,-------'---'-------," +
+			"\n    |___________________|" +
+			"\n            '---'";
+	
+	private String leverplankednailed = 
+			"\n             ___ (@)" +
+			"\n            |.-.|/ " +
+			"\n            || |/" +
+			"\n            || /|" +
+			"\n            ||/||" +
+			"\n    ,----o--'---'--o----," +
+			"\n    |_o_______________o_|" +
+			"\n            '---'";
+	
+	private String displayhalf =
+			"\n  __________________________\n" + 
+			" |                          |\n" +
+			" |    You're half there!    |\n" +
+			" |__________________________|\n";
+	
+	private String displaydone1 =
+			"\n  __________________________\n" + 
+			" |                          |\n" +
+			" |         You have         |\n" +
+			" |__________________________|\n";
+	
+	private String displaydone2 =
+			"\n  __________________________\n" + 
+			" |                          |\n" +
+			" |         made it!         |\n" +
+			" |__________________________|\n";
+	
+	private String displaylook =
+			"\n  __________________________\n" + 
+			" |                          |\n" +
+			" |           Look           |\n" +
+			" |__________________________|\n";
+	
+	private String displayup =
+			"\n  __________________________\n" + 
+			" |                          |\n" +
+			" |           Up!            |\n" +
+			" |__________________________|\n";
+	
+	private String displayoff =
+			"\n  __________________________\n" + 
+			" |                          |\n" +
+			" |                          |\n" +
+			" |__________________________|\n";
 
 	public Items2_Nails() {
 		this.setCompletion(false);
@@ -34,9 +127,8 @@ public class Items2_Nails extends Puzzle_Common {
 		this.setInteractionPoints(pois);
 	}
 
-	public String getImage() {
-		return this.image;
-		
+	private void setImage(String input) {
+		this.image = input;
 	}
 	
 	public boolean getNaileddown() {
@@ -50,19 +142,32 @@ public class Items2_Nails extends Puzzle_Common {
 	public String getDescription() {
 		if (this.getCompletion() == false) {
 			if (this.getPanel() == false) {
+				this.setImage(displayoff + leverdown);
 				return "You see a wooden Wall in front of you.\nThere is a vertical Slot in the middle of it with a Lever sticking out and a display above it.\nThe display is currently off.\nThe Lever is pointing downwards.";
 			} else
+				this.setImage(paneled);
 				return "There is a wooden Panel in front of you.\nIt is held in place by 4 Nails.\nSomething seems to be behind it.";
 		} 
 		else if (this.getCompletion() == true && this.other.getCompletion() == false && this.getNaileddown() == true) {
+			this.setImage(displayhalf + leverplankednailed);
 			return "You see a wooden Wall in front of you.\nThere is a vertical Slot in the middle of it with a Lever sticking out and a display above it.\nThe Lever is pointing upwards.\nYou have nailed the Plank below holding it in place.\nThe display reads: You're half there!\n\nLooks like you are done here.";
 		}
-		else if (this.getCompletion() == true && this.other.getCompletion() == false) {
+		else if (this.getCompletion() == true && this.other.getCompletion() == false && this.planked == true) {
+			this.setImage(displayhalf + leverplanked);
 			return "You see a wooden Wall in front of you.\nThere is a vertical Slot in the middle of it with a Lever sticking out and a display above it.\nThe Lever is pointing upwards.\nThe display reads: You're half there!";
 		}
-		else
-			return "The display on this Wall together with the display on the " + otherlocation + " seem to be talking to you.\nThey say: \"Look Up\".\n\nLooks like you are done here.";
-	}
+		else if (this.getCompletion() == true && this.other.getCompletion() == false) {
+			this.setImage(displayhalf + leverup);
+			return "You see a wooden Wall in front of you.\nThere is a vertical Slot in the middle of it with a Lever sticking out and a display above it.\nThe Lever is pointing upwards.\nThe display reads: You're half there!";
+		}
+		else {
+			if (this.planked == true) {
+			this.setImage(displayup + leverplankednailed);
+				}
+			else this.setImage(displaylook + leverup);
+			return "The display on this Wall together with the display on the " + otherlocation + " seem to be talking to you.\nThey say: \"Look Up!\".\n\nLooks like you are done here.";
+		}
+		}
 
 	public String getResult() {
 
@@ -103,6 +208,15 @@ public class Items2_Nails extends Puzzle_Common {
 
 	public void performInteraction(Item item1, Item item2) {
 		this.setOther();
+		boolean check = false;
+		for (Item pocket : Pocket.getPocket()) {
+			if (pocket.getItemName().equalsIgnoreCase("Nails")) {
+				check = true;
+				break;
+			}
+			else check = false;
+		}
+
 		if (this.getPanel() == true && ((item1.getItemName().contentEquals("Hammer") && item2.getItemName().contentEquals("Nails")) | (item2.getItemName().contentEquals("Hammer") && item1.getItemName().contentEquals("Nails"))) || ((item1.getItemName().contentEquals("Hammer") && item2.getItemName().contentEquals("Panel")) | (item2.getItemName().contentEquals("Hammer") && item1.getItemName().contentEquals("Panel")))) {
 			Outputter.setReaction(
 					"You pry off the Nails. The Panel immediately slides down and disappears through a slit.");
@@ -111,12 +225,17 @@ public class Items2_Nails extends Puzzle_Common {
 			Pocket.addItemAuto(Nails);
 
 		}
-		else if (this.getCompletion() == true && this.planked == true && ((item1.getItemName().equals("Plank") && item2.getItemName().equals("Nails")) | (item1.getItemName().equals("Nails") && item2.getItemName().equals("Plank"))) || ((item1.getItemName().equals("Plank") && item2.getItemName().equals("Hammer")) | (item1.getItemName().equals("Hammer") && item2.getItemName().equals("Plank"))) || ((item1.getItemName().equals("Hammer") && item2.getItemName().equals("Nails")) | (item1.getItemName().equals("Nails") && item2.getItemName().equals("Hammer")))) {
+		else if (this.getCompletion() == true && check == true && this.planked == true && (((item1.getItemName().equals("Plank") && item2.getItemName().equals("Nails")) | (item1.getItemName().equals("Nails") && item2.getItemName().equals("Plank"))) || ((item1.getItemName().equals("Plank") && item2.getItemName().equals("Hammer")) | (item1.getItemName().equals("Hammer") && item2.getItemName().equals("Plank"))) || ((item1.getItemName().equals("Hammer") && item2.getItemName().equals("Nails")) | (item1.getItemName().equals("Nails") && item2.getItemName().equals("Hammer"))))) {
 			this.setCompletion(true);
 			this.setNaileddown(true);
 			this.setYesnoquestion(false);
-			Pocket.removeItem(item1);
-			Pocket.removeItem(item2);
+			if (item1.getItemName() != "Hammer") {
+				Pocket.removeItem(item1);
+			}
+			if (item2.getItemName() != "Hammer") {
+				Pocket.removeItem(item2);
+			}
+			this.planked = true;
 			this.setResult("You use your Hammer to nail the wooden Plank below the Lever.\nThis should hold. Now the Lever will stay in place.");
 			}
 		else if (this.getCompletion() == true && (item1.getItemName().equals("Plank") && !item2.getItemName().equals("Hammer") && !item2.getItemName().equals("Nails")) | (item2.getItemName().equals("Plank") && !item1.getItemName().equals("Hammer") && !item1.getItemName().equals("Nails"))) {
@@ -215,6 +334,14 @@ public class Items2_Nails extends Puzzle_Common {
 		if (this.getResult() != null && this.getNaileddown() == false && this.getResult().contains("You hold the wooden Plank below the Lever. Now the Lever won't drop down. But you still need something to hold the Plank in place.")) {
 			this.planked = false;
 		}
+			if (Pocket.getPocket() != null) {
+				for (Item pocket : Pocket.getPocket()) {
+						if (pocket.getItemName().equalsIgnoreCase("Plank")) {
+							this.planked = false;
+							break;
+						}
+					}
+				}
 	}
 
 }
