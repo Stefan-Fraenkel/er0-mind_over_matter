@@ -228,12 +228,11 @@ public class Items2_Nails extends Puzzle_Common {
 			this.setCompletion(true);
 			this.setNaileddown(true);
 			this.setYesnoquestion(false);
-			if (item1.getItemName() != "Hammer") {
-				Pocket.removeItem(item1);
-			}
-			if (item2.getItemName() != "Hammer") {
-				Pocket.removeItem(item2);
-			}
+			for (Item pocket : Pocket.getPocket()) {
+					if (pocket.getItemName().equals("Plank") || pocket.getItemName().equals("Nails")) {
+							Pocket.removeItem(pocket);
+						}
+					}
 			this.planked = true;
 			this.setResult("You use your Hammer to nail the wooden Plank below the Lever.\nThis should hold. Now the Lever will stay in place.");
 			}
