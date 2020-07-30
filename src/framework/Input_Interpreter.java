@@ -3,19 +3,17 @@ package framework;
 public final class Input_Interpreter {
 
 /*
-Zweck der Klasse: Nutzereingaben, welche dieses Programm grunds�tzlich verarbeiten kann erkennen, annehmen und in Einzelteile zerlegen.
+Zweck der Klasse: Nutzereingaben, welche dieses Programm grundsaetzlich verarbeiten kann erkennen, annehmen und in Einzelteile zerlegen.
 Diese werden dann an die Klasse "Abilities" weitergereicht. Erst dort wird dann versucht, diese Eingaben umzusetzen.
 */
 	
 	private Input_Interpreter() {
 
 	}
-	
-// Aufbereitung der Nutzereingaben
 
 	public static void determineInput(String input) {
 		
-//		Formatierung allgemein
+// Formatierung allgemein
 
 		input = input.toLowerCase();
 		input = input.trim();
@@ -28,44 +26,49 @@ Diese werden dann an die Klasse "Abilities" weitergereicht. Erst dort wird dann 
 		input = input.replaceAll("shine ", "");
 		input = input.replaceAll("look ", "");
 
+// Entfernung Sonderzeichen
+		
 		String[] inputArray = input.replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
 
-
-
-// Ja/Nein
+/*
+Bestimmung der Art der gewünschten Interaktion des Inputs.
+Danach: Weiterreichung an die jeweils zusatändige Methode.
+*/
+		
+// Erkennung: Ja/Nein Frage
 
 		if (input.contains("yes") && (inputArray.length == 1)
 				|| (input.contains("no") && !input.contains("north")) && (inputArray.length == 1)) {
 			yesNo(input);
 		}
 
-//	Blickrichtung
+// Erkennung: Bewegung
 
 		if (input.contains("north") || input.contains("south") || input.contains("east") || input.contains("west")
 				|| (input.contains("up") && !input.contains("pick")) || input.contains("down")) {
 			view(input);
 		}
 
-// Aufnehmen von Items und Verstauen im Inventar
+// Erkennung: Aufnehmen von Items und Verstauen im Inventar
 
 		if (input.contains("pick up") && (!input.contains("use") && !input.contains("with"))) {
 			pickUp(input, inputArray);
 		}
 
-// Kombinieren von Items
+// Erkennung: Kombinieren von Items
 
 		if ((input.contains("use")) && input.contains("with") && (input.indexOf("use") < input.indexOf("with"))
 				&& !input.contains("pick up")) {
 			useWith(input, inputArray);
 		}
 
-// Entscheidung zwischen Aufnehmen und Verstauen
+// Erkennung: Aufnehmen oder Verstauen möglich
 
 		if (input.contains("pick up") && input.contains("use") && input.contains("with")) {
 			pickUporUsewith(input, inputArray);
 		}
 
-// Aufruf des Inventars
+// Erkennung: Aufruf des Inventars
 
 		if (input.contains("pocket") && (inputArray.length <= 2)) {
 			pocket();
@@ -73,6 +76,14 @@ Diese werden dann an die Klasse "Abilities" weitergereicht. Erst dort wird dann 
 
 	}
 
+
+/*
+Bestimmung der variablen Elemente der gewünschten Interaktion des Inputs.
+Danach: Weiterreichung an die Klasse Abilities zur Umsetzung des Kommandos.
+*/
+
+// Bei einigen Eingaben, wie Ja/Nein, sind keine weiteren Operationen notwendig.
+	
 	private static void yesNo(String input) {
 		Abilities.yesNo(input);
 	}
