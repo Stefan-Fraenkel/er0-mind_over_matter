@@ -91,6 +91,10 @@ Danach: Weiterreichung an die Klasse Abilities zur Umsetzung des Kommandos.
 	private static void view(String input) {
 		Abilities.move(input);
 	}
+	
+	private static void pocket() {
+		Abilities.lookupPocket();
+	}
 
 	private static void pickUporUsewith(String input, String[] inputArray) {
 
@@ -162,7 +166,4 @@ Danach: Weiterreichung an die Klasse Abilities zur Umsetzung des Kommandos.
 
 	}
 
-	private static void pocket() {
-		Abilities.lookupPocket();
-	}
 }
