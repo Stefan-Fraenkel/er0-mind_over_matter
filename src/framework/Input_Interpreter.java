@@ -68,7 +68,7 @@ Danach: Weiterreichung an die jeweils zusatändige Methode.
 			pickUporUsewith(input, inputArray);
 		}
 
-// Erkennung: Aufruf des Inventars
+// Erkennung: Aufruf des Inventars 
 
 		if (input.contains("pocket") && (inputArray.length <= 2)) {
 			pocket();
