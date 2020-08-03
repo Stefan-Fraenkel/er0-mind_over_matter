@@ -12,7 +12,7 @@ public class Test {
 		Abilities.setLayout(room_01);
 		Abilities.setView(room_01.getDown());
 	
-		System.out.println("This is a Text-Adventure.\nThe game will present its output in this terminal.\nTo solve its puzzles you will simply need to type out commands.\nPlease maximize this window as some scenes will require a large space to display properly.\n\nOnce you are done press 'Enter' to start the game.");
+		System.out.println("This is a Text-Adventure.\nThe game will present its output in this terminal.\nTo solve its puzzles you will simply need to type out commands.\nA typical command might look like this: pick up suitcase\n\nPlease maximize this window as some scenes will require a large space to display properly.\n\nOnce you are done press 'Enter' to start the game.\n\n\n________________________________________________________________________________________________________________");
 		Scanner enter = new Scanner(System.in);
 		String intro = enter.nextLine();
 
