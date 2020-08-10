@@ -341,5 +341,4 @@ public class Items2_Nails extends Puzzle_Common {
 					}
 				}
 	}
-
 }
